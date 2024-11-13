@@ -1,6 +1,9 @@
 # Aoitome Bookstore Frontend 
 
-![Swagger Backend](Swagger.png)
+## Preview
+![CartUI](CartUI.png)
+![ProductDetailUI](UserProductDetail.png)
+![AdminUI](AdminUI.png)
 
 ### To view the repo containing the backend of this project, please follow this [link](https://github.com/4nh3k/BookStore).
 
