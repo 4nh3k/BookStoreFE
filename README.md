@@ -1,30 +1,20 @@
-# React + TypeScript + Vite
+# Aoitome Bookstore Frontend 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Swagger Backend](Swagger.png)
 
-Currently, two official plugins are available:
+### To view the repo containing the backend of this project, please follow this [link](https://github.com/4nh3k/BookStore).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A Bookstore E-Commerce website based on ReactJS and Tailwind CSS.
 
-## Expanding the ESLint configuration
+## Features
+- Login, Logout, Forgot Password for Authentication & Authorization
+- Homepage, Cart, Product Detail, Order, Account page for Customer
+- Dashboard, Product Management, Customer Management, Order Management for Admin
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Installation
+1. Clone the repository
+ `[git clone https://github.com/4nh3k/BookStore.git](https://github.com/4nh3k/BookStoreFE)`
+2. Open the terminal in project root and install dependencies using: npm install
+3. Run the project using the command: npm run dev
+4. Open the website using the url: https://localhost:3000
+5. Login by creating a new account for user (for admin functionalities please login through admin - admin (username - password))
