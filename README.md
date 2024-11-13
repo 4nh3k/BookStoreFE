@@ -1,11 +1,13 @@
 # Aoitome Bookstore Frontend 
 
-## Preview
-![CartUI](CartUI.png)
-![ProductDetailUI](UserProductDetail.png)
-![AdminUI](AdminUI.png)
-
 ### To view the repo containing the backend of this project, please follow this [link](https://github.com/4nh3k/BookStore).
+
+## Preview
+<div style="display: flex; justify-content: space-between;">
+  <img src="CartUI.png" alt="Cart UI" width="30%" />
+  <img src="UserProductDetail.png" alt="Product Detail UI" width="30%" />
+  <img src="AdminUI.png" alt="Admin UI" width="30%" />
+</div>
 
 A Bookstore E-Commerce website based on ReactJS and Tailwind CSS.
 
