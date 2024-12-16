@@ -1,8 +1,13 @@
 # Aoitome Bookstore Frontend 
 
-![Swagger Backend](Swagger.png)
-
 ### To view the repo containing the backend of this project, please follow this [link](https://github.com/4nh3k/BookStore).
+
+## Preview
+<div style="display: flex; justify-content: space-between;">
+  <img src="CartUI.png" alt="Cart UI" width="30%" />
+  <img src="UserProductDetail.png" alt="Product Detail UI" width="30%" />
+  <img src="AdminUI.png" alt="Admin UI" width="30%" />
+</div>
 
 A Bookstore E-Commerce website based on ReactJS and Tailwind CSS.
 
@@ -13,7 +18,7 @@ A Bookstore E-Commerce website based on ReactJS and Tailwind CSS.
 
 ## Installation
 1. Clone the repository
- `[git clone https://github.com/4nh3k/BookStore.git](https://github.com/4nh3k/BookStoreFE)`
+ `[git clone https://github.com/4nh3k/BookStoreFE.git]`
 2. Open the terminal in project root and install dependencies using: npm install
 3. Run the project using the command: npm run dev
 4. Open the website using the url: https://localhost:3000
