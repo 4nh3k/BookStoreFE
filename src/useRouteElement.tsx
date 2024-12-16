@@ -124,7 +124,7 @@ export default function useRouteElement() {
           path: path.paymentSuccess,
         },
         {
-          element: <OrderManagement />,
+          element: <OrderManagement isAdmin={false} />,
           path: path.customerOrder,
         },
         {

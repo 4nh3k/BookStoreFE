@@ -2,7 +2,10 @@ import { addressApi } from "@/apis/address.api";
 import authApi from "@/apis/auth.api";
 import AdminPassword from "@/components/AdminComponents/Input/AdminPassword";
 import { User } from "@/types/Models/Identity/User.type";
-import { Address } from "@/types/Models/Ordering/BuyerModel/Address.type";
+import {
+  Address,
+  getDefaultAddress,
+} from "@/types/Models/Ordering/BuyerModel/Address.type";
 import { getUIDFromLS } from "@/utils/auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Select } from "flowbite-react";
@@ -55,7 +58,6 @@ const UserAccount = () => {
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
-
     if (file) {
       // Check if the selected file is an image
       if (file.type.startsWith("image/")) {
@@ -132,7 +134,7 @@ const UserAccount = () => {
   const handleCreateAddress = async () => {
     try {
       console.log("data", address);
-      if (addressId === undefined) {
+      if (addressId === undefined || addressId === 0) {
         await createAddressMutation.mutateAsync(address);
         toast.success("Address created successfully");
       } else {
@@ -237,6 +239,11 @@ const UserAccount = () => {
 
       toast.success("User's password has been updated");
     },
+    onSuccess: () => {
+      setCurrentPassword("");
+      setNewPassword("");
+      setRepeatNewPassword("");
+    },
   });
 
   const handleUpdateUserPassword = (e) => {
@@ -249,6 +256,8 @@ const UserAccount = () => {
       return await addressApi.getAddressByBuyer(userId, 0, 1000);
     },
   });
+
+  console.log("Address data: ", addressData);
 
   return (
     <div className="bg-white flex flex-col mt-5 px-4 py-4 flex-start flex-shrink-0 min-h-screen gap-6 rounded-lg shadow-sm">
@@ -403,35 +412,51 @@ const UserAccount = () => {
             <span className="heading-4">Shipping address </span>
             <img src={InfoOutline} width={24} height={24} />
           </div>
-          <div className="flex w-full flex-wrap items-stretch justify-between gap-8">
-            <AdminDropdown
-              title={"Save address"}
-              items={
-                addressData?.data.data.map((address) => {
-                  return {
-                    key: address.id,
-                    value: address.street,
-                  };
-                }) || []
-              }
-              name={"saveAddress"}
-              value={
-                addressData?.data?.data[addressId ?? 0]?.street ??
-                "There's no address saved"
-              }
-              onChange={function (e: any, key: number): void {
-                console.log(key);
-                setAddressId(key);
-                setAddress(addressData?.data.data.find((a) => a.id === key));
-              }}
-            />
-          </div>
+          {addressData?.data.data.length > 0 ? (
+            <div className="flex w-full flex-wrap items-stretch justify-between gap-8">
+              <AdminDropdown
+                title={"Save address"}
+                items={[
+                  { key: 0, value: "Reset Address" }, // Null item for reset
+                  ...(addressData?.data?.data?.map((address) => ({
+                    key: address.id ?? 0,
+                    value: [
+                      address.street,
+                      address.ward ? `Ward ${address.ward}` : null,
+                      address.district ? `District ${address.district}` : null,
+                      address.city ? `${address.city} City` : null,
+                    ]
+                      .filter(Boolean) // Remove any null or undefined values
+                      .join(", "),
+                  })) || []),
+                ]}
+                name={"saveAddress"}
+                value={addressId}
+                onChange={function (e: any, key: number | undefined): void {
+                  if (key !== 0) {
+                    console.log(key);
+                    setAddressId(key);
+                    setAddress(
+                      addressData?.data.data.find((a) => a.id === key)
+                    );
+                  } else {
+                    setAddressId(0);
+                    setAddress(getDefaultAddress());
+                  }
+                }}
+              />
+            </div>
+          ) : (
+            <span className="text-sm">
+              No address available, please try creating a new one.
+            </span>
+          )}
           <div className="flex w-full flex-wrap items-stretch justify-between gap-8">
             <AdminTextArea
               title={"Your address*"}
               placeholder={"Enter your address"}
               name={"street"}
-              value={address?.street}
+              value={address?.street ?? ""}
               onChange={handleAdressChange}
             />
           </div>
@@ -504,7 +529,7 @@ const UserAccount = () => {
           </div>
           <div className="flex items-start justify-end gap-3 self-stretch w-full">
             <CustomButton
-              label={"Save changes"}
+              label={"Create address"}
               onClick={handleCreateAddress}
               textColor={"white"}
               btnColor={"primary"}

@@ -1,3 +1,4 @@
+import { addressApi } from "@/apis/address.api";
 import { cartApi } from "@/apis/cart.api";
 import { orderingApi } from "@/apis/ordering.api";
 import { paymentApi } from "@/apis/payment.api";
@@ -11,13 +12,14 @@ import { OrderItem } from "@/types/Models/Ordering/OrderModel/OrderItem.type";
 import { getUIDFromLS } from "@/utils/auth";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Label, Radio } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
 export function Checkout() {
-  const userId = getUIDFromLS();
+  const userId = getUIDFromLS() ?? "";
+
   const [address, setAddress] = useState<AddressDTO>({
     street: "ab ",
     city: "HCM",
@@ -25,6 +27,11 @@ export function Checkout() {
     zipCode: "ab",
     country: "United States",
   } as AddressDTO);
+
+  useEffect(() => {
+    console.log("Address: ", address);
+  }, [address]);
+
   const navigate = useNavigate();
 
   function formatDate(date: Date) {

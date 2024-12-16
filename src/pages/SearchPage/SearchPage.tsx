@@ -31,7 +31,7 @@ export function SearchPage() {
     setStartPrice(e.target.value !== "" ? e.target.value : 0);
   };
 
-  const [endPrice, setEndPrice] = useState(1);
+  const [endPrice, setEndPrice] = useState(0);
   const handleEndPrice = (e) => {
     setEndPrice(e.target.value !== "" ? e.target.value : 0);
   };

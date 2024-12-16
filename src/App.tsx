@@ -41,7 +41,7 @@ export default function App() {
       transition: { duration: 0 },
       chatDisabled: true,
       path: async (params) => {
-        let link = `http://localhost:3000/product/${
+        let link = `https://localhost:3000/product/${
           userInput[parseInt(params.userInput) - 1]
         }`;
         setUserInput([]);

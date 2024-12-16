@@ -8,3 +8,16 @@ export interface Address{
   zipCode?: string;
   buyerId?: string;
 }
+
+export function getDefaultAddress(): Address {
+  return {
+    id: 0,
+    street: "Not available",
+    ward: "",
+    district: "",
+    city: "",
+    country: "",
+    zipCode: "",
+    buyerId: "",
+  };
+}

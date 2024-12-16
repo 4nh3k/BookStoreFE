@@ -1,5 +1,11 @@
 import { Checkbox, Label, Select, TextInput, Textarea } from "flowbite-react";
 import { AddressDTO } from "../../types/DTOs/Ordering/AddressDTO.type";
+import { addressApi } from "@/apis/address.api";
+import { useQuery } from "@tanstack/react-query";
+import { getUIDFromLS } from "@/utils/auth";
+import { useState } from "react";
+import AdminDropdown from "../AdminComponents/Input/AdminDropdown";
+import { getDefaultAddress } from "@/types/Models/Ordering/BuyerModel/Address.type";
 
 interface DeliveryAddressFormProps {
   address: AddressDTO;
@@ -10,44 +16,57 @@ export function DeliveryAddressForm({
   address,
   setAddress,
 }: DeliveryAddressFormProps) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddress((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setAddress((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setAddress((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const userId = getUIDFromLS() ?? "";
+  const { data: addressData, isLoading: isLoadingAddress } = useQuery({
+    queryKey: ["address", userId],
+    queryFn: async () => {
+      return await addressApi.getAddressByBuyer(userId, 0, 1000);
+    },
+  });
+
+  const [addressId, setAddressId] = useState<number | undefined>(undefined);
 
   return (
     <form className="w-full px-4 py-4 space-y-8 bg-white rounded border border-gray-200 flex-col justify-start items-start inline-flex content-border">
-      {/* <fieldset className="flex max-w-md gap-4">
-        <div className="flex items-center gap-2">
-          <Radio
-            id="united-state"
-            name="countries"
-            value="USA"
-            defaultChecked
-          />
-          <Label htmlFor="united-state">Individual</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Radio id="germany" name="countries" value="Germany" />
-          <Label htmlFor="germany">Company</Label>
-        </div>
-      </fieldset> */}
       <span className="heading-5">Delivery Address</span>
       <div className="w-full">
-        <div className="mb-2 block">
-          <Label className="font-medium" value="Save address" />
-        </div>
-        <Select id="countries" required>
-          <option>United States</option>
-          <option>Canada</option>
-          <option>France</option>
-          <option>Germany</option>
-        </Select>
+        {addressData?.data.data.length > 0 ? (
+          <div className="flex w-full flex-wrap items-stretch justify-between gap-8">
+            <AdminDropdown
+              title={"Save address"}
+              items={[
+                ...(addressData?.data?.data?.map((address) => ({
+                  key: address.id ?? 0,
+                  value: [
+                    address.street,
+                    address.ward ? `Ward ${address.ward}` : null,
+                    address.district ? `District ${address.district}` : null,
+                    address.city ? `${address.city} City` : null,
+                  ]
+                    .filter(Boolean) // Remove any null or undefined values
+                    .join(", "),
+                })) || []),
+              ]}
+              name={"saveAddress"}
+              value={addressId}
+              onChange={function (e: any, key: number | undefined): void {
+                if (key !== 0) {
+                  console.log(key);
+                  setAddressId(key);
+                  setAddress(addressData?.data.data.find((a) => a.id === key));
+
+                } else {
+                  setAddressId(0);
+                  setAddress(getDefaultAddress());
+                }
+              }}
+            />
+          </div>
+        ) : (
+          <span className="text-sm">
+            No address available, please try creating a new one in the user settings.
+          </span>
+        )}
       </div>
       <div className="flex w-full space-x-3">
         <div className="w-full">
@@ -69,7 +88,7 @@ export function DeliveryAddressForm({
         </div>
         <TextInput placeholder="Enter your phone number" type="text" />
       </div>
-      <div className="w-full">
+      {/* <div className="w-full">
         <div className="mb-2 block">
           <Label className="font-medium" value="Your Address*" />
         </div>
@@ -115,13 +134,13 @@ export function DeliveryAddressForm({
             <option>HN</option>
           </Select>
         </div>
-      </div>
-      <div className="flex items-center gap-2">
+      </div> */}
+      {/* <div className="flex items-center gap-2">
         <Checkbox id="accept" defaultChecked />
         <Label htmlFor="accept" className="flex">
           Save the data in the address list
         </Label>
-      </div>
+      </div> */}
     </form>
   );
 }

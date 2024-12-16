@@ -1,5 +1,5 @@
 import { Select } from "flowbite-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface AdminDropdownProps {
   title: string;
@@ -16,10 +16,22 @@ const AdminDropdown: React.FC<AdminDropdownProps> = ({
   name,
   onChange,
 }) => {
+
+  const [val, setVal] = useState(value);
+
+  useEffect(() => {
+    setVal(val);
+  }, [value])
+
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    
     const value = e.target.value;
     const selectedOption = items.find((option) => option.value === value);
     const key = selectedOption ? selectedOption.key : null;
+    setVal(value);
+    console.log("Value: ", value);
+    console.log("Items: ", items);
+    console.log("Key selected: ", key);
     onChange(e, key);
   };
   console.log(items);
@@ -30,10 +42,10 @@ const AdminDropdown: React.FC<AdminDropdownProps> = ({
         name={name}
         className="self-strech w-full"
         required
-        value={value}
+        value={val}
         onChange={handleChange}
       >
-        {items.map((item, index) => (
+        {items.map((item) => (
           <option key={item.key} value={item.value}>
             {item.value}
           </option>
