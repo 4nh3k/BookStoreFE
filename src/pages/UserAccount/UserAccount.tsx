@@ -1,6 +1,14 @@
 import { addressApi } from "@/apis/address.api";
 import authApi from "@/apis/auth.api";
+import InfoOutline from "@/assets/icon/info-outline.svg";
+import UploadIcon from "@/assets/icon/upload.svg";
+import ElysiaImg from "@/assets/img/elysia.jpg";
+import CustomButton from "@/components/AdminComponents/CustomButton/CustomButton";
+import AdminDropdown from "@/components/AdminComponents/Input/AdminDropdown";
+import AdminInput from "@/components/AdminComponents/Input/AdminInput";
 import AdminPassword from "@/components/AdminComponents/Input/AdminPassword";
+import AdminTextArea from "@/components/AdminComponents/Input/AdminTextArea";
+import BooleanIcon from "@/components/BooleanIcon/BooleanIcon";
 import { User } from "@/types/Models/Identity/User.type";
 import {
   Address,
@@ -11,14 +19,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Select } from "flowbite-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import InfoOutline from "@/assets/icon/info-outline.svg";
-import UploadIcon from "@/assets/icon/upload.svg";
-import ElysiaImg from "@/assets/img/elysia.jpg";
-import CustomButton from "@/components/AdminComponents/CustomButton/CustomButton";
-import AdminDropdown from "@/components/AdminComponents/Input/AdminDropdown";
-import AdminInput from "@/components/AdminComponents/Input/AdminInput";
-import AdminTextArea from "@/components/AdminComponents/Input/AdminTextArea";
-import BooleanIcon from "@/components/BooleanIcon/BooleanIcon";
 
 const UserAccount = () => {
   const userId = getUIDFromLS() ?? "";
@@ -313,6 +313,7 @@ const UserAccount = () => {
               value={
                 userProfile?.userName !== undefined ? userProfile?.userName : ""
               }
+              readonly={true}
               title={"Username*"}
               placeholder={"Enter username"}
               onChange={handleChange}

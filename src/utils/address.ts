@@ -25,13 +25,25 @@ function mapAddressDTOToAddress(addressDTO: AddressDTO): Address {
   };
 }
 
-export function getAddressesFromList(
-  addressList: AddressDTO[],
-  id: number
-): Address {
-  const foundAddress = addressList.find((address) => address.id === id);
+export function getAddressesFromList(addressList: any, id: number): Address {
+  console.log("addressList", addressList);
+
+  if (!addressList) {
+    throw new Error("Address list is empty");
+  }
+
+  // Handle paginated format
+  const data = Array.isArray(addressList) ? addressList : addressList.data;
+
+  if (!Array.isArray(data)) {
+    throw new Error("Invalid address list format");
+  }
+
+  const foundAddress = data.find((address) => address.id === id);
+
   if (!foundAddress) {
     throw new Error(`Address with id ${id} not found`);
   }
+
   return mapAddressDTOToAddress(foundAddress);
 }

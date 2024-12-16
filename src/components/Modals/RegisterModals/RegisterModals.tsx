@@ -34,22 +34,35 @@ export function RegisterModals({
   const registerMutation = useMutation({
     mutationKey: ["register"],
     mutationFn: async (data: any) => {
-      const res = await authApi.register(data);
-      if (res.status === 200) {
-        toast.success("Register successfully");
-        setRegisterData({
-          username: "",
-          email: "",
-          password: "",
-          repeatPassword: "",
-        });
-        onSignInClick();
-      } else {
-        toast.error("Register failed");
+      try {
+        const res = await authApi.register(data);
+
+        if (res.status === 200) {
+          toast.success("Registered successfully");
+          setRegisterData({
+            username: "",
+            email: "",
+            password: "",
+            repeatPassword: "",
+          });
+          onSignInClick();
+          return res.data;
+        } else {
+          toast.error("Registration failed");
+          return null;
+        }
+      } catch (error: any) {
+        // Check for 409 Conflict
+        if (error.response?.status === 409) {
+          toast.error(error.response.data);
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
+        throw error;
       }
-      return res.data;
     },
   });
+
   const handleSubmit = async () => {
     if (registerData.password.length < 8) {
       toast.error("Password must be at least 8 characters");

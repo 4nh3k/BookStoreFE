@@ -83,8 +83,8 @@ export function LoginModals({
           else navigate("/");
         }
       },
-      onError: (error: Error) => {
-        toast.error(`Login failed!\n${error.message}`);
+      onError: (error: any) => {
+        toast.error(`Login failed!\n${error.response.data}`);
       },
     });
   };

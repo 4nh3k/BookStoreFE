@@ -22,6 +22,7 @@ export function OrderSummary(props: OrderSummaryProps) {
     queryKey: ["order", id],
     queryFn: async () => {
       const res = await orderingApi.getOrderDetail(id);
+      console.log("orderData", res.data);
       return res.data;
     },
   });
@@ -35,6 +36,7 @@ export function OrderSummary(props: OrderSummaryProps) {
         0,
         1000
       );
+      console.log("address res", res.data);
       return res.data;
     },
     enabled: !!orderData?.buyerId,
@@ -72,6 +74,7 @@ export function OrderSummary(props: OrderSummaryProps) {
   if (isLoading || isLoadingAddress) return <div>Loading...</div>;
 
   // Get the address after data has loaded
+  console.log("addressData", addressData);
   const address = getAddressesFromList(addressData?.data, orderData?.addressId);
 
   return (
