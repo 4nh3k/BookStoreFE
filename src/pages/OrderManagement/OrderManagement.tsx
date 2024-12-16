@@ -31,7 +31,7 @@ export function OrderManagement({ isAdmin }: OrderManagementProps) {
         return data.data;
       } else {
         console.log("Beginning fetching admin orders");
-        const data = await orderingApi.getOrderingByPage(page - 1, 10);
+        const data = await orderingApi.getOrderingByPage(page - 1, 1000);
 
         console.log("data", data);
         return data.data;
@@ -42,7 +42,6 @@ export function OrderManagement({ isAdmin }: OrderManagementProps) {
   const res: RowData[] | undefined = data?.data.map((item) => {
     return {
       order_id: item.id,
-      customer_name: item.buyerName,
       total: item.totalAmount,
       order_date: item.orderDate,
       status: (

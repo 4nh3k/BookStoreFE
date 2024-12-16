@@ -54,7 +54,6 @@ const Badge: React.FC<BadgeProps> = ({
       orderingApi.updateOrderStatus(orderId, newStatus),
     onSuccess: () => {
       toast.success("Order status updated successfully!");
-      // Optionally, you could call refetch or any other state update logic here
     },
     onError: () => {
       toast.error("Failed to update order status.");

@@ -27,7 +27,15 @@ const BookGridPage = () => {
   const { data: searchBook, isLoading: isSearchBookLoading } = useQuery({
     queryKey: ["search_book", { pageIndex, pageSize }],
     queryFn: () => {
-      return bookApi.getSearchBookByPage(searchTerm, pageIndex - 1, pageSize);
+      return bookApi.getSearchBookByPage(
+        searchTerm,
+        pageIndex - 1,
+        pageSize,
+        undefined,
+        [],
+        0,
+        0
+      );
     },
   });
 
@@ -152,8 +160,8 @@ const BookGridPage = () => {
             onChange={onChangeSearchTerm}
             onSubmit={onSearchSubmit}
             enableSizing={true}
-            placeholder={"Enter a search term"}
-            dropdownList={["By name", "By author"]}
+            placeholder={"Enter input"}
+            dropdownList={["By name"]}
             enableDropdown={true}
           />
           <div className="flex justify-end items-center gap-3">

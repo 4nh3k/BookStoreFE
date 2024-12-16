@@ -23,11 +23,6 @@ const OrderList: React.FC<OrderListProps> = (props) => {
       className: "text-gray-900 text-sm",
     },
     {
-      label: "Customer Name",
-      prop: "customer_name",
-      className: "text-gray-500 text-sm",
-    },
-    {
       label: "Order Date",
       prop: "order_date",
       className: "text-gray-500 text-sm",

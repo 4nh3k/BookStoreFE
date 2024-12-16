@@ -41,7 +41,7 @@ export default function SearchInput({
     const value = e.target.value;
     setFilter(value);
     if (enableDropdown) {
-      onDropdownChange(value);
+      onDropdownChange?.(value);
     }
   };
 

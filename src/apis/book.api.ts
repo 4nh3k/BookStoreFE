@@ -18,9 +18,19 @@ export const bookApi = {
       `${CATALOG_PREFIX}${URL_BOOKS}?pageIndex=${pageIndex}&pageSize=${pageSize}`
     );
   },
-  getSearchBookByPage(searchWord: string, pageIndex: number, pageSize: number, isPriceAscend: boolean, genreIds: number[], startPrice: number, endPrice: number) {
-    let route = `${CATALOG_PREFIX}${URL_BOOKS}/search?searchWord=${searchWord}&pageIndex=${pageIndex}&pageSize=${pageSize}&isPriceAscend=${isPriceAscend}&startPrice=${startPrice}&endPrice=${endPrice}`;
-    
+  getSearchBookByPage(
+    searchWord: string,
+    pageIndex: number,
+    pageSize: number,
+    isPriceAscend: boolean | undefined,
+    genreIds: number[],
+    startPrice: number,
+    endPrice: number
+  ) {
+    let route = `${CATALOG_PREFIX}${URL_BOOKS}/search?searchWord=${searchWord}&pageIndex=${pageIndex}&pageSize=${pageSize}&startPrice=${startPrice}&endPrice=${endPrice}`;
+
+    if (isPriceAscend !== undefined) route += `&isPriceAscend=${isPriceAscend}`;
+
     genreIds.forEach((genre) => {
       route += `&GenreIds=${genre}`;
     });
@@ -28,10 +38,16 @@ export const bookApi = {
     return http.get<PaginatedResponse<BookGeneralInfoDTO>>(route);
   },
 
-  getFilterBookByPage(pageIndex: number, pageSize: number, genreIds: number[], authorName: string) {
+  getFilterBookByPage(
+    pageIndex: number,
+    pageSize: number,
+    genreIds: number[],
+    authorName: string
+  ) {
     let route = `${CATALOG_PREFIX}${URL_BOOKS}/filter?pageIndex=${pageIndex}&pageSize=${pageSize}`;
-    
-    if (authorName !== "" && authorName !== undefined) route += `&authorName=${authorName}`
+
+    if (authorName !== "" && authorName !== undefined)
+      route += `&authorName=${authorName}`;
 
     genreIds.forEach((genre) => {
       route += `&GenreIds=${genre}`;

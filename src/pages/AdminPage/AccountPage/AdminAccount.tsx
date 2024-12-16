@@ -3,8 +3,6 @@ import { Select } from "flowbite-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import authApi from "@/apis/auth.api";
-import CheckCircle from "@/assets/icon/check-circle.svg";
-import XCircle from "@/assets/icon/x-circle.svg";
 import InfoOutline from "@/assets/icon/info-outline.svg";
 import UploadIcon from "@/assets/icon/upload.svg";
 import ElysiaImg from "@/assets/img/elysia.jpg";
@@ -82,6 +80,8 @@ const AdminAccount = () => {
       console.log(admin);
     }
   }, [isLoadingAdminData, adminData]);
+
+  console.log("Admin data: ", adminData);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -198,7 +198,10 @@ const AdminAccount = () => {
 
   const handleUpdateUserPassword = (e) => {
     updatePasswordMutation.mutate();
-  };
+  }
+  
+  console.log("User id: ", userId);
+  console.log("Admin data: ",adminData);
 
   return (
     <div className="bg-white flex flex-col mt-5 px-4 py-4 flex-start flex-shrink-0 min-h-screen gap-6 rounded-lg shadow-sm">

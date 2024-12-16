@@ -150,7 +150,7 @@ const BookReviewList = () => {
             onChange={onChangeSearchTerm}
             onSubmit={onSearchSubmit}
             enableSizing={true}
-            placeholder={"Enter a search term"}
+            placeholder={"Enter input"}
             dropdownList={["Book id", "Customer id"]}
             enableDropdown={true}
             onDropdownChange={onChangeDropdown}
